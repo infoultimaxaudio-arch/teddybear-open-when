@@ -594,6 +594,7 @@ if (!verify.ok) {
 const verifiedTracks = result.tracks || {};
 const verifiedKeys = Object.keys(verifiedTracks)
   .filter(key => TRACK_KEYS.includes(key));
+const verifiedCount = verifiedKeys.length;
 
 const missingKeys = entries
   .map(([key]) => key)
