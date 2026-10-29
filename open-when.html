@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff5f6" />
+  <meta name="description" content="A little collection of notes for Teddybear — open one whenever you need a smile." />
+  <title>Open When… — for Teddybear 🧸</title>
+  <style>
+    :root {
+      --bg: #fff7f7;
+      --paper: #fffdfb;
+      --ink: #4c3942;
+      --muted: #8b737d;
+      --pink: #d97893;
+      --pink-dark: #b95675;
+      --pink-light: #ffe5eb;
+      --peach: #ffe9dc;
+      --lavender: #eee8ff;
+      --sage: #e6f2e8;
+      --line: #f1d9df;
+      --shadow: 0 18px 45px rgba(153, 91, 111, .12);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 7% 8%, rgba(255, 219, 230, .62), transparent 34rem),
+        radial-gradient(ellipse at 93% 28%, rgba(255, 232, 214, .56), transparent 30rem),
+        var(--bg);
+      font-family: ui-rounded, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #b95675; outline-offset: 4px; }
+    .page { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 38px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--pink-dark); }
+    .brand-mark { width: 33px; height: 33px; display: grid; place-items: center; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 5px 14px rgba(185,86,117,.08); }
+    .tiny-pill { display: inline-flex; gap: 7px; align-items: center; color: var(--muted); font-size: 12px; padding: 8px 12px; border: 1px solid rgba(217,120,147,.2); background: rgba(255,255,255,.65); border-radius: 999px; }
+    .hero { text-align: center; padding: 52px 12px 28px; position: relative; }
+    .hero .eyebrow { color: var(--pink-dark); font-size: 12px; text-transform: uppercase; letter-spacing: .17em; font-weight: 850; margin: 0 0 14px; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -.045em; font-size: clamp(43px, 7vw, 78px); line-height: .99; margin: 0; }
+    h1 em { color: var(--pink-dark); font-weight: 500; }
+    .hero-copy { max-width: 540px; margin: 20px auto 0; color: var(--muted); font-size: clamp(14px, 2vw, 17px); line-height: 1.8; }
+    .hero-copy strong { color: var(--ink); font-weight: 750; }
+    .doodle { position: absolute; font-size: 28px; opacity: .72; user-select: none; animation: bob 4.5s ease-in-out infinite; }
+    .doodle.one { left: 12%; top: 72px; transform: rotate(-12deg); }
+    .doodle.two { right: 13%; top: 92px; animation-delay: -1.3s; }
+    .doodle.three { right: 21%; bottom: 3px; font-size: 21px; animation-delay: -2s; }
+    .doodle.four { left: 22%; bottom: 9px; font-size: 19px; animation-delay: -.7s; }
+    @keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+    .hint { display: flex; justify-content: center; gap: 9px; align-items: center; margin: 7px auto 20px; color: var(--muted); font-size: 13px; }
+    .hint span { height: 1px; width: 27px; background: #e9c4ce; }
+    .envelope-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .envelope-card {
+      --card: var(--pink-light);
+      text-align: left; padding: 0; border: 1px solid rgba(217,120,147,.22); border-radius: 22px; background: rgba(255,255,255,.84); overflow: hidden;
+      min-height: 224px; box-shadow: 0 9px 25px rgba(153,91,111,.06); cursor: pointer; color: inherit;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; position: relative;
+    }
+    .envelope-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: rgba(185,86,117,.42); }
+    .envelope-card:active { transform: translateY(-1px) scale(.995); }
+    .card-top { min-height: 122px; background: var(--card); display: grid; place-items: center; position: relative; overflow: hidden; }
+    .card-top::before, .card-top::after { content: ""; position: absolute; width: 160px; height: 160px; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; }
+    .card-top::before { transform: translate(-55px, 55px); }
+    .card-top::after { transform: translate(55px, -55px); }
+    .envelope-emoji { width: 76px; height: 59px; border-radius: 12px 12px 15px 15px; border: 1px solid rgba(185,86,117,.2); background: rgba(255,255,255,.78); display: grid; place-items: center; font-size: 35px; box-shadow: 0 8px 17px rgba(130,74,91,.1); position: relative; z-index: 1; transform: rotate(-4deg); transition: transform .22s ease; }
+    .envelope-card:hover .envelope-emoji { transform: rotate(3deg) translateY(-2px); }
+    .seal { position: absolute; z-index: 2; width: 23px; height: 23px; display: grid; place-items: center; border-radius: 50%; background: #fff8f7; font-size: 12px; border: 1px solid rgba(185,86,117,.18); box-shadow: 0 2px 6px rgba(130,74,91,.08); }
+    .card-body { padding: 16px 17px 17px; }
+    .card-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 20px; line-height: 1.2; font-weight: 600; letter-spacing: -.02em; }
+    .card-desc { margin: 7px 0 14px; color: var(--muted); line-height: 1.55; font-size: 13px; min-height: 40px; }
+    .card-action { display: flex; justify-content: space-between; align-items: center; color: var(--pink-dark); font-size: 12px; font-weight: 800; letter-spacing: .02em; }
+    .opened-tag { display: none; font-size: 10px; color: #5e8c69; background: #e8f5e9; padding: 4px 7px; border-radius: 99px; }
+    .envelope-card.is-opened .opened-tag { display: inline-flex; }
+    .envelope-card.is-opened .card-action .action-text { display: none; }
+    .envelope-card.is-opened { border-color: #c9e1cc; }
+    .envelope-card.is-opened .card-top { filter: saturate(.88); }
+    .surprise-row { text-align: center; padding: 28px 0 8px; }
+    .surprise-btn { border: 0; cursor: pointer; background: var(--ink); color: white; padding: 14px 20px; border-radius: 999px; font-size: 13px; font-weight: 800; box-shadow: 0 9px 18px rgba(76,57,66,.16); transition: transform .18s ease, box-shadow .18s ease; }
+    .surprise-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(76,57,66,.2); }
+    .surprise-btn span { margin-right: 8px; }
+    .bottom-note { background: rgba(255,255,255,.62); border: 1px solid rgba(217,120,147,.18); border-radius: 22px; margin: 30px auto 0; max-width: 740px; padding: 23px 25px; display: flex; align-items: center; gap: 18px; }
+    .bottom-icon { flex: 0 0 51px; height: 51px; border-radius: 17px; display: grid; place-items: center; background: var(--peach); font-size: 25px; }
+    .bottom-note h2 { margin: 0 0 5px; font-size: 14px; }
+    .bottom-note p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+    footer { text-align: center; color: #a28b94; font-size: 11px; letter-spacing: .04em; padding: 27px 8px 0; }
+    footer strong { color: #9b6173; font-weight: 800; }
+
+
+    /* Owner-only music setup panel: visible only on ?setup=1 */
+    [hidden] { display: none !important; }
+    .setup-panel { margin: 20px auto 28px; padding: clamp(18px, 3vw, 28px); border: 1px solid #edcbd5; border-radius: 24px; background: rgba(255,255,255,.91); box-shadow: var(--shadow); }
+    .setup-heading { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 18px; }
+    .setup-icon { flex: 0 0 48px; height: 48px; display: grid; place-items: center; background: var(--pink-light); border-radius: 16px; font-size: 24px; }
+    .setup-panel h2 { margin: 0 0 6px; font-family: Georgia, serif; font-size: clamp(23px, 3.5vw, 30px); font-weight: 500; letter-spacing: -.025em; }
+    .setup-panel p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .setup-help { margin: 14px 0 18px !important; padding: 11px 13px; background: #fff7f3; border: 1px solid #f4ded4; border-radius: 13px; }
+    .music-upload-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .music-upload-card { display: flex; flex-direction: column; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: #fff; min-width: 0; }
+    .music-upload-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); }
+    .music-upload-card input[type=file] { display: block; width: 100%; max-width: 100%; color: var(--muted); font-size: 11px; }
+    .music-upload-card input[type=file]::file-selector-button { border: 1px solid #ebcbd4; border-radius: 999px; padding: 7px 10px; margin-right: 8px; background: #fff5f7; color: var(--pink-dark); font: inherit; font-weight: 800; cursor: pointer; }
+    .music-file-name { font-size: 11px; line-height: 1.4; color: #8c6c79; overflow-wrap: anywhere; min-height: 16px; }
+    .setup-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .setup-save { border: 0; border-radius: 999px; background: var(--pink-dark); color: #fff; font: inherit; font-size: 13px; font-weight: 850; padding: 13px 18px; cursor: pointer; box-shadow: 0 7px 17px rgba(185,86,117,.17); }
+    .setup-save:disabled { opacity: .6; cursor: wait; }
+    .setup-secondary { border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); font: inherit; font-size: 12px; font-weight: 750; padding: 12px 15px; cursor: pointer; }
+    .setup-status { flex: 1 1 100%; color: var(--muted); font-size: 12px !important; min-height: 19px; overflow-wrap: anywhere; }
+    .share-result { margin-top: 16px; border: 1px dashed #d9a5b4; border-radius: 15px; background: #fff7f9; padding: 14px; }
+    .share-result label { display: block; color: var(--pink-dark); font-size: 11px; font-weight: 850; margin-bottom: 7px; }
+    .share-link-row { display: flex; gap: 8px; }
+    .share-link-input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 10px; color: var(--ink); background: #fff; font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .music-toggle { cursor: pointer; border-radius: 999px; padding: 11px 13px; border: 1px solid #e6c0cb; font-size: 12px; font-weight: 800; background: #fff5f7; color: var(--pink-dark); white-space: nowrap; }
+    .music-toggle.is-playing { background: #f8e3eb; border-color: #d97893; }
+    @media (max-width: 600px) { .music-upload-grid { grid-template-columns: 1fr; } .share-link-row { flex-direction: column; } .setup-heading { gap: 10px; } .setup-icon { flex-basis: 42px; height: 42px; } }
+
+    /* Letter modal */
+    .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 20; background: rgba(56,37,46,.45); backdrop-filter: blur(7px); padding: 18px; align-items: center; justify-content: center; overflow-y: auto; }
+    .modal-backdrop.show { display: flex; animation: fade-in .18s ease both; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .letter-modal { width: min(560px, 100%); max-height: min(88vh, 820px); overflow-y: auto; background: var(--paper); border-radius: 26px; box-shadow: 0 24px 90px rgba(28,14,19,.24); position: relative; animation: letter-in .28s cubic-bezier(.2,.85,.25,1.12) both; }
+    @keyframes letter-in { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .letter-cover { padding: 27px 28px 25px; text-align: center; background: var(--pink-light); position: relative; overflow: hidden; }
+    .letter-cover::before { content: "✦  ·  ✿  ·  ✦"; display: block; font-size: 12px; letter-spacing: .35em; color: rgba(185,86,117,.68); margin-bottom: 12px; }
+    .letter-icon { font-size: 40px; line-height: 1; margin-bottom: 12px; }
+    .letter-kicker { margin: 0 0 7px; text-transform: uppercase; letter-spacing: .16em; font-size: 10px; color: var(--pink-dark); font-weight: 850; }
+    .letter-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(27px, 5vw, 38px); font-weight: 500; letter-spacing: -.035em; line-height: 1.08; }
+    .close-btn { position: absolute; z-index: 3; top: 14px; right: 14px; width: 36px; height: 36px; border: 1px solid rgba(185,86,117,.18); background: rgba(255,255,255,.8); color: var(--ink); cursor: pointer; border-radius: 50%; font-size: 21px; display: grid; place-items: center; line-height: 1; }
+    .letter-content { padding: 25px 30px 28px; }
+    .letter-greeting { color: var(--pink-dark); font-weight: 800; margin: 0 0 13px; font-size: 14px; }
+    .letter-message { font-family: Georgia, "Times New Roman", serif; font-size: 17px; line-height: 1.85; color: #65505a; white-space: pre-line; margin: 0; }
+    .letter-signoff { margin-top: 23px; border-top: 1px dashed #ebcbd4; padding-top: 17px; display: flex; justify-content: space-between; align-items: end; gap: 12px; color: var(--muted); font-size: 12px; }
+    .letter-signoff strong { color: var(--pink-dark); display: block; margin-top: 4px; font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
+    .letter-stamp { font-size: 28px; }
+    .letter-footer { padding: 0 30px 26px; display: flex; gap: 9px; }
+    .next-btn, .close-secondary { cursor: pointer; border-radius: 999px; padding: 11px 15px; border: 1px solid var(--line); font-size: 12px; font-weight: 800; }
+    .next-btn { flex: 1; color: white; background: var(--pink-dark); border-color: var(--pink-dark); }
+    .close-secondary { background: #fff; color: var(--muted); }
+    .toast { position: fixed; z-index: 40; left: 50%; bottom: 22px; translate: -50% 15px; opacity: 0; pointer-events: none; background: #4c3942; color: #fff; border-radius: 999px; padding: 11px 16px; font-size: 12px; box-shadow: var(--shadow); transition: opacity .2s ease, translate .2s ease; max-width: calc(100vw - 30px); text-align: center; }
+    .toast.show { opacity: 1; translate: -50% 0; }
+    @media (max-width: 780px) {
+      .envelope-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .hero { padding-top: 43px; }
+      .doodle.one { left: 4%; } .doodle.two { right: 5%; }
+      .envelope-card { min-height: 216px; }
+    }
+    @media (max-width: 460px) {
+      .page { width: min(100% - 22px, 480px); padding-top: 15px; }
+      .brand { font-size: 11px; }
+      .tiny-pill { font-size: 10px; padding: 7px 9px; }
+      .hero { padding: 42px 5px 24px; }
+      .hero .eyebrow { font-size: 10px; }
+      .hero-copy { font-size: 14px; margin-top: 15px; }
+      .doodle { font-size: 20px; }
+      .doodle.one { top: 14px; } .doodle.two { top: 28px; }
+      .hint { font-size: 11px; }
+      .envelope-grid { gap: 10px; }
+      .envelope-card { border-radius: 18px; min-height: 205px; }
+      .card-top { min-height: 100px; }
+      .envelope-emoji { width: 65px; height: 52px; font-size: 30px; }
+      .card-body { padding: 13px 12px 14px; }
+      .card-title { font-size: 17px; }
+      .card-desc { font-size: 12px; min-height: 52px; }
+      .card-action { font-size: 10px; }
+      .bottom-note { padding: 17px; gap: 12px; align-items: start; }
+      .bottom-icon { flex-basis: 42px; height: 42px; font-size: 21px; border-radius: 14px; }
+      .letter-cover { padding: 25px 19px 22px; }
+      .letter-content { padding: 22px 21px 24px; }
+      .letter-message { font-size: 16px; }
+      .letter-footer { padding: 0 21px 23px; flex-wrap: wrap; }
+      .next-btn { flex: 1 1 100%; }
+      .music-toggle { flex: 1 1 auto; }
+      .letter-signoff { align-items: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">🧸</span><span>A LITTLE BOX OF HAPPY THINGS</span></div>
+      <div class="tiny-pill"><span>🌷</span> made just for you</div>
+    </header>
+
+    <section class="setup-panel" id="setup-panel" hidden aria-labelledby="setup-title">
+      <div class="setup-heading">
+        <div class="setup-icon" aria-hidden="true">🎵</div>
+        <div>
+          <h2 id="setup-title">Choose a song for every envelope</h2>
+          <p>Har envelope ke liye alag music upload kar. Jab Teddybear envelope kholegi, usi ka song play hoga. 🧸</p>
+        </div>
+      </div>
+      <p class="setup-help">MP3, M4A, WAV, OGG jaise audio files supported hain. Har file maximum 3.5 MB. Music securely page ke share link ke andar nahi, Netlify storage mein rahega — isliye link chhota rahega. Browser music ko envelope ke click par start karega.</p>
+      <div class="music-upload-grid">
+        <label class="music-upload-card"><span class="music-upload-title">💌 Open when you're sad</span><input type="file" accept="audio/*" data-music-file="sad" aria-label="Choose music for sad envelope"><span class="music-file-name" data-file-name="sad">No music selected — optional</span></label>
+        <label class="music-upload-card"><span class="music-upload-title">☁️ Open when you're overthinking</span><input type="file" accept="audio/*" data-music-file="overthinking" aria-label="Choose music for overthinking envelope"><span class="music-file-name" data-file-name="overthinking">No music selected — optional</span></label>
+        <label class="music-upload-card"><span class="music-upload-title">😂 Open when you need a laugh</span><input type="file" accept="audio/*" data-music-file="laugh" aria-label="Choose music for laugh envelope"><span class="music-file-name" data-file-name="laugh">No music selected — optional</span></label>
+        <label class="music-upload-card"><span class="music-upload-title">🌙 Open when you can't sleep</span><input type="file" accept="audio/*" data-music-file="sleep" aria-label="Choose music for sleep envelope"><span class="music-file-name" data-file-name="sleep">No music selected — optional</span></label>
+        <label class="music-upload-card"><span class="music-upload-title">🌟 Open when you need a reminder</span><input type="file" accept="audio/*" data-music-file="proud" aria-label="Choose music for reminder envelope"><span class="music-file-name" data-file-name="proud">No music selected — optional</span></label>
+        <label class="music-upload-card"><span class="music-upload-title">🎁 Open just because</span><input type="file" accept="audio/*" data-music-file="justbecause" aria-label="Choose music for surprise envelope"><span class="music-file-name" data-file-name="justbecause">No music selected — optional</span></label>
+      </div>
+      <div class="setup-actions">
+        <button class="setup-save" id="save-music-btn" type="button">Upload music &amp; create share link ✨</button>
+        <button class="setup-secondary" id="setup-preview-hint" type="button">Preview a song</button>
+        <p class="setup-status" id="setup-status" role="status" aria-live="polite">Select a song for any envelope. You can also leave some envelopes silent.</p>
+      </div>
+      <div class="share-result" id="share-result" hidden>
+        <label for="share-link-input">YOUR SHAREABLE OPEN-WHEN LINK</label>
+        <div class="share-link-row"><input class="share-link-input" id="share-link-input" type="url" readonly aria-label="Shareable Open When link"><button class="setup-save" id="copy-share-link" type="button">Copy link</button></div>
+        <p style="margin-top:9px">Is link ko Teddybear ko bhej dena. Uske browser par upload ki hui songs available honge. 💗</p>
+      </div>
+    </section>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <span class="doodle one" aria-hidden="true">✿</span>
+      <span class="doodle two" aria-hidden="true">♡</span>
+      <span class="doodle three" aria-hidden="true">✦</span>
+      <span class="doodle four" aria-hidden="true">☁️</span>
+      <p class="eyebrow">for the days that feel a little different</p>
+      <h1 id="hero-title">Open <em>when…</em></h1>
+      <p class="hero-copy">Hey Teddybear 🧸, kabhi mood off ho, kabhi hasi chahiye ho, ya bas ek chhota sa reminder — <strong>yahan tere liye kuch na kuch hai.</strong></p>
+    </section>
+
+    <div class="hint"><span></span> pick a little envelope to open <span></span></div>
+
+    <section class="envelope-grid" id="envelope-grid" aria-label="Choose an envelope">
+      <button class="envelope-card" type="button" data-note="sad" style="--card: var(--pink-light)" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">💌</div><div class="seal">♡</div></div>
+        <div class="card-body"><h2 class="card-title">Open when you're sad</h2><p class="card-desc">For the days that feel a bit too heavy.</p><div class="card-action"><span class="action-text">A little comfort →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">✿</span></div></div>
+      </button>
+      <button class="envelope-card" type="button" data-note="overthinking" style="--card: var(--lavender)" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">☁️</div><div class="seal">✦</div></div>
+        <div class="card-body"><h2 class="card-title">Open when you're overthinking</h2><p class="card-desc">A tiny pause for your very busy brain.</p><div class="card-action"><span class="action-text">Breathe a little →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">☁</span></div></div>
+      </button>
+      <button class="envelope-card" type="button" data-note="laugh" style="--card: var(--peach)" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">😂</div><div class="seal">☺</div></div>
+        <div class="card-body"><h2 class="card-title">Open when you need a laugh</h2><p class="card-desc">Warning: very silly content ahead.</p><div class="card-action"><span class="action-text">Risk a giggle →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">✦</span></div></div>
+      </button>
+      <button class="envelope-card" type="button" data-note="sleep" style="--card: #e8e9ff" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">🌙</div><div class="seal">☾</div></div>
+        <div class="card-body"><h2 class="card-title">Open when you can't sleep</h2><p class="card-desc">A soft little good-night reminder.</p><div class="card-action"><span class="action-text">Slow things down →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">☾</span></div></div>
+      </button>
+      <button class="envelope-card" type="button" data-note="proud" style="--card: var(--sage)" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">🌟</div><div class="seal">★</div></div>
+        <div class="card-body"><h2 class="card-title">Open when you need a reminder</h2><p class="card-desc">For when you forget how capable you are.</p><div class="card-action"><span class="action-text">A little boost →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">✧</span></div></div>
+      </button>
+      <button class="envelope-card" type="button" data-note="justbecause" style="--card: #fff0d9" aria-haspopup="dialog">
+        <div class="card-top"><div class="envelope-emoji">🎁</div><div class="seal">♡</div></div>
+        <div class="card-body"><h2 class="card-title">Open just because</h2><p class="card-desc">No reason needed. Just a tiny surprise.</p><div class="card-action"><span class="action-text">There's a note for you →</span><span class="opened-tag">✓ opened</span><span aria-hidden="true">✿</span></div></div>
+      </button>
+    </section>
+
+    <div class="surprise-row">
+      <button class="surprise-btn" id="surprise-btn" type="button"><span>🎀</span> Pick a surprise for me</button>
+    </div>
+
+    <aside class="bottom-note">
+      <div class="bottom-icon" aria-hidden="true">🌼</div>
+      <div><h2>A tiny reminder, from Suraj</h2><p>Har din perfect hona zaroori nahi hai. Kabhi rest karna, kabhi hasna, aur kabhi khud ko thoda extra time dena bhi important hai. Take care of yourself, okay? 💛</p></div>
+    </aside>
+
+    <footer>made with a little care <span aria-hidden="true">♡</span> <strong>developed by Suraj</strong></footer>
+  </main>
+
+  <div class="modal-backdrop" id="modal-backdrop" role="presentation">
+    <section class="letter-modal" id="letter-modal" role="dialog" aria-modal="true" aria-labelledby="letter-title" aria-describedby="letter-message" tabindex="-1">
+      <button class="close-btn" id="close-btn" type="button" aria-label="Close letter">×</button>
+      <div class="letter-cover" id="letter-cover">
+        <div class="letter-icon" id="letter-icon">💌</div>
+        <p class="letter-kicker">a little note for you</p>
+        <h2 class="letter-title" id="letter-title">Open when…</h2>
+      </div>
+      <div class="letter-content">
+        <p class="letter-greeting" id="letter-greeting">Heyyy Teddybear 🧸</p>
+        <p class="letter-message" id="letter-message"></p>
+        <div class="letter-signoff"><div>from someone rooting for you<strong>— Suraj 🌷</strong></div><div class="letter-stamp" id="letter-stamp" aria-hidden="true">♡</div></div>
+      </div>
+      <div class="letter-footer"><button class="next-btn" id="next-btn" type="button">Open another note ✨</button><button class="music-toggle" id="music-toggle" type="button" hidden>♫ Play music</button><button class="close-secondary" id="close-secondary" type="button">Close</button></div>
+    </section>
+  </div>
+  <audio id="envelope-audio" preload="none" loop></audio>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // CUSTOMISE THE LETTERS HERE. Edit the title/message text without changing the rest of the code.
+    const NOTES = {
+      sad: {
+        title: "Open when you're sad",
+        icon: "💌", stamp: "🌷", color: "#ffe5eb",
+        message: `Heyyy Teddybear 🧸\n\nAaj agar mood thoda off hai, toh it's okay. Har baar strong rehna ya sab kuch figure out karna zaroori nahi hota. Kabhi-kabhi bas thoda rest, favourite song, kuch tasty sa, aur apne liye thoda time enough hota hai.\n\nJo bhi chal raha hai, I hope things feel a little lighter soon. Aur please yaad rakhna — ek bad day ka matlab bad life bilkul nahi hota.\n\nAaj apne saath thoda soft rehna, okay? You deserve that. 🌷`
+      },
+      overthinking: {
+        title: "Open when you're overthinking",
+        icon: "☁️", stamp: "🫧", color: "#eee8ff",
+        message: `Hey Teddybear, pause for a second. 🫶\n\nEk deep breath le. Shoulders relax kar. Thoda paani pee. Bas abhi ke liye itna hi.\n\nHar thought ko abhi solve karna zaroori nahi hai. Kuch answers time ke saath clear hote hain, aur kuch cheezein hum kal fresh mind se better handle karte hain.\n\nTu apne aap ko thoda break de sakti hai. One thing at a time, okay? Tera brain bhi kabhi-kabhi overtime kar leta hai. 😭🤍`
+      },
+      laugh: {
+        title: "Open when you need a laugh",
+        icon: "😂", stamp: "✨", color: "#ffe9dc",
+        message: `TEDDYBEARRR, emergency announcement! 📢\n\nThis is your official reminder to unclench your jaw, drink some water, and stop staring at your screen like it owes you money. 😭\n\nBreaking news: a potato was asked to be more productive. It said, “I’m already a-peeling.” 🥔💀\n\nOkay sorry, joke quality ke liye koi refund nahi milega. But agar tu thoda sa bhi hansi, toh mera kaam done. Ja ab ek aur silly video dekh le. 😂`
+      },
+      sleep: {
+        title: "Open when you can't sleep",
+        icon: "🌙", stamp: "☾", color: "#e8e9ff",
+        message: `Heyyy sleepy Teddybear 🌙🧸\n\nAaj ke liye bas, okay? Jo kaam reh gaya woh kal bhi ho sakta hai. Abhi duniya ko solve karne ki duty teri nahi hai.\n\nPhone thoda side mein rakh, ek comfy position find kar, aur dheere-dheere saans le. Koi pressure nahi ki turant sona hi hai — bas body ko rest karne de.\n\nHope tujhe soft dreams aayein aur kal ka din aaj se thoda aur achha ho. Good night, Teddybear. 🤍`
+      },
+      proud: {
+        title: "Open when you need a reminder",
+        icon: "🌟", stamp: "⭐", color: "#e6f2e8",
+        message: `Hey Teddybear, ek chhoti si baat yaad dilani thi. 🌟\n\nTu har cheez perfectly kare, aisa zaroori nahi. Progress slow ho sakti hai, plans change ho sakte hain, aur kabhi-kabhi break bhi lena padta hai. Isse teri mehnat ya capability kam nahi ho jaati.\n\nKhud ko sirf un cheezon se judge mat kar jo abhi baaki hain. Jo kuch tune handle kiya hai, woh bhi count karta hai.\n\nOne step at a time. I hope tu khud ko thoda credit dena shuru kare, because you genuinely deserve it. 🌼`
+      },
+      justbecause: {
+        title: "Open just because",
+        icon: "🎁", stamp: "♡", color: "#fff0d9",
+        message: `Surpriseee, Teddybear! 🎀🧸\n\nKoi special occasion nahi hai. Koi reason bhi nahi. Bas socha ek chhoti si cheez ho jo tere face pe smile le aaye.\n\nI hope aaj tujhe kuch achha khane ko mile, koi favourite song sunne ko mile, koi random funny cheez dekhne ko mile, aur din mein ek aisa moment aaye jahan tu soche, “hehe, nice.” 🤭\n\nBas aise hi khush rehna, apna khayal rakhna, aur apni cute si vibe mat khona. Have a lovely day! 🌷`
+      }
+    };
+
+    const grid = document.getElementById('envelope-grid');
+    const backdrop = document.getElementById('modal-backdrop');
+    const modal = document.getElementById('letter-modal');
+    const titleEl = document.getElementById('letter-title');
+    const messageEl = document.getElementById('letter-message');
+    const iconEl = document.getElementById('letter-icon');
+    const stampEl = document.getElementById('letter-stamp');
+    const coverEl = document.getElementById('letter-cover');
+    const closeBtn = document.getElementById('close-btn');
+    const closeSecondary = document.getElementById('close-secondary');
+    const nextBtn = document.getElementById('next-btn');
+    const surpriseBtn = document.getElementById('surprise-btn');
+    const toast = document.getElementById('toast');
+    const audioPlayer = document.getElementById('envelope-audio');
+    const musicToggle = document.getElementById('music-toggle');
+    const setupPanel = document.getElementById('setup-panel');
+    const saveMusicButton = document.getElementById('save-music-btn');
+    const setupStatus = document.getElementById('setup-status');
+    const shareResult = document.getElementById('share-result');
+    const shareLinkInput = document.getElementById('share-link-input');
+    const copyShareLinkButton = document.getElementById('copy-share-link');
+    const setupPreviewHint = document.getElementById('setup-preview-hint');
+    const MUSIC_API = '/.netlify/functions/envelope-music';
+    const TRACK_KEYS = ['sad', 'overthinking', 'laugh', 'sleep', 'proud', 'justbecause'];
+    const pageParams = new URLSearchParams(window.location.search);
+    const setupMode = pageParams.get('setup') === '1' && !pageParams.has('gift');
+    let activeGiftId = pageParams.get('gift') || '';
+    let remoteTracks = {};
+    const selectedMusic = Object.create(null);
+    const previewUrls = Object.create(null);
+    let setupGiftId = '';
+    let lastTrigger = null;
+    let currentKey = null;
+    let toastTimer;
+
+    if (setupMode) {
+      setupPanel.hidden = false;
+      document.body.classList.add('setup-mode');
+    }
+
+    function createGiftId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID().replaceAll('-', '').toLowerCase();
+      }
+      const bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+
+    function formatBytes(bytes) {
+      return bytes < 1024 * 1024
+        ? `${Math.max(1, Math.round(bytes / 1024))} KB`
+        : `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    function inferAudioType(file) {
+      if (file.type && file.type.startsWith('audio/')) return file.type;
+      const ext = (file.name.split('.').pop() || '').toLowerCase();
+      const byExtension = {
+        mp3: 'audio/mpeg', m4a: 'audio/mp4', mp4: 'audio/mp4',
+        aac: 'audio/aac', wav: 'audio/wav', wave: 'audio/wav',
+        ogg: 'audio/ogg', oga: 'audio/ogg', opus: 'audio/ogg',
+        flac: 'audio/flac', webm: 'audio/webm', aiff: 'audio/aiff',
+        aif: 'audio/aiff', mid: 'audio/midi', midi: 'audio/midi'
+      };
+      return byExtension[ext] || '';
+    }
+
+    function stopEnvelopeMusic() {
+      audioPlayer.pause();
+      audioPlayer.removeAttribute('src');
+      audioPlayer.load();
+      musicToggle.hidden = true;
+      musicToggle.classList.remove('is-playing');
+      musicToggle.textContent = '♫ Play music';
+    }
+
+    function currentMusicSource(key) {
+      if (setupMode && selectedMusic[key] && previewUrls[key]) {
+        return previewUrls[key];
+      }
+      if (activeGiftId && remoteTracks[key]) {
+        const params = new URLSearchParams({ id: activeGiftId, track: key });
+        return `${MUSIC_API}?${params.toString()}`;
+      }
+      return '';
+    }
+
+    function playEnvelopeMusic(key) {
+      const source = currentMusicSource(key);
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      if (!source) {
+        stopEnvelopeMusic();
+        return;
+      }
+      audioPlayer.src = source;
+      audioPlayer.volume = 0.58;
+      audioPlayer.loop = true;
+      audioPlayer.load();
+      musicToggle.hidden = false;
+      musicToggle.textContent = '♫ Playing music';
+      musicToggle.classList.add('is-playing');
+      // This runs inside the envelope's click handler, which is the user's playback gesture.
+      const playPromise = audioPlayer.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(() => {
+          musicToggle.textContent = '♫ Music on · tap to pause';
+          musicToggle.classList.add('is-playing');
+        }).catch(() => {
+          musicToggle.textContent = '▶ Tap to play music';
+          musicToggle.classList.remove('is-playing');
+          showToast('Music autoplay blocked — tap “Play music” once.');
+        });
+      }
+    }
+
+    musicToggle.addEventListener('click', () => {
+      if (audioPlayer.paused) {
+        const playPromise = audioPlayer.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => showToast('This audio could not play. Try another file.'));
+        }
+      } else {
+        audioPlayer.pause();
+      }
+    });
+    audioPlayer.addEventListener('playing', () => {
+      if (!musicToggle.hidden) {
+        musicToggle.textContent = '♫ Music on · tap to pause';
+        musicToggle.classList.add('is-playing');
+      }
+    });
+    audioPlayer.addEventListener('pause', () => {
+      if (!musicToggle.hidden) {
+        musicToggle.textContent = '▶ Music paused · tap to play';
+        musicToggle.classList.remove('is-playing');
+      }
+    });
+    audioPlayer.addEventListener('error', () => {
+      if (!musicToggle.hidden) {
+        musicToggle.textContent = '⚠ Music unavailable';
+        musicToggle.classList.remove('is-playing');
+      }
+    });
+
+    document.querySelectorAll('[data-music-file]').forEach(input => {
+      input.addEventListener('change', () => {
+        const key = input.dataset.musicFile;
+        const file = input.files && input.files[0];
+        if (previewUrls[key]) {
+          URL.revokeObjectURL(previewUrls[key]);
+          delete previewUrls[key];
+        }
+        delete selectedMusic[key];
+        const label = document.querySelector(`[data-file-name="${key}"]`);
+        if (!file) {
+          if (label) label.textContent = 'No music selected — optional';
+          return;
+        }
+        const audioType = inferAudioType(file);
+        if (!audioType) {
+          input.value = '';
+          if (label) label.textContent = 'Please select a supported audio file.';
+          showToast('Choose an audio file such as MP3, M4A, WAV or OGG.');
+          return;
+        }
+        if (file.size === 0 || file.size > 3_500_000) {
+          input.value = '';
+          if (label) label.textContent = 'File must be smaller than 3.5 MB.';
+          showToast('Each audio file must be 3.5 MB or smaller.');
+          return;
+        }
+        selectedMusic[key] = file;
+        previewUrls[key] = URL.createObjectURL(file);
+        if (label) label.textContent = `${file.name} · ${formatBytes(file.size)}`;
+        shareResult.hidden = true;
+        setupStatus.textContent = 'Music selected. Open its envelope below to preview, or upload all selected tracks to create your share link.';
+      });
+    });
+
+    async function loadGiftTracks() {
+      if (!activeGiftId) return;
+      if (!/^[a-f0-9]{32}$/i.test(activeGiftId)) {
+        showToast('This gift link does not look valid. Ask Suraj for the latest link.');
+        return;
+      }
+      try {
+        const response = await fetch(`${MUSIC_API}?${new URLSearchParams({ id: activeGiftId })}`, {
+          headers: { Accept: 'application/json' },
+          cache: 'no-store'
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || `Music setup could not be loaded (${response.status}).`);
+        remoteTracks = result.tracks && typeof result.tracks === 'object' ? result.tracks : {};
+        // If the visitor opened an envelope before the network metadata arrived, start its track now.
+        if (currentKey && backdrop.classList.contains('show') && remoteTracks[currentKey]) {
+          playEnvelopeMusic(currentKey);
+        }
+      } catch (error) {
+        console.error('Could not load envelope music:', error);
+        showToast('Letters work, but music could not load. Ask Suraj to check the music setup.');
+      }
+    }
+
+    function setSetupStatus(message, isError = false) {
+      setupStatus.textContent = message;
+      setupStatus.style.color = isError ? '#b33d58' : '';
+    }
+
+    async function uploadTrack(giftId, key, file) {
+      const contentType = inferAudioType(file);
+      const params = new URLSearchParams({ action: 'upload' });
+      const response = await fetch(`${MUSIC_API}?${params.toString()}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': contentType,
+          'X-Gift-Id': giftId,
+          'X-Track-Key': key
+        },
+        body: file,
+        cache: 'no-store'
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || `${file.name} upload failed (${response.status}).`);
+      return result;
+    }
+
+    saveMusicButton.addEventListener('click', async () => {
+      const entries = TRACK_KEYS.filter(key => selectedMusic[key]).map(key => [key, selectedMusic[key]]);
+      if (!entries.length) {
+        setSetupStatus('Pehle kam se kam ek envelope ke liye music file select kar, bhai.', true);
+        showToast('Choose at least one audio file first.');
+        return;
+      }
+      if (!navigator.onLine) {
+        setSetupStatus('Internet connection nahi hai. Reconnect karke dobara try kar.', true);
+        return;
+      }
+      setupGiftId = setupGiftId || createGiftId();
+      saveMusicButton.disabled = true;
+      shareResult.hidden = true;
+      try {
+        for (let i = 0; i < entries.length; i++) {
+          const [key, file] = entries[i];
+          setSetupStatus(`Uploading ${i + 1}/${entries.length}: ${file.name}…`);
+          await uploadTrack(setupGiftId, key, file);
+        }
+        setSetupStatus('Verifying uploaded tracks…');
+        const verify = await fetch(`${MUSIC_API}?${new URLSearchParams({ id: setupGiftId })}`, {
+          headers: { Accept: 'application/json' }, cache: 'no-store'
+        });
+        const result = await verify.json().catch(() => ({}));
+        if (!verify.ok) throw new Error(result.error || `Verification failed (${verify.status}).`);
+        const verifiedCount = Object.keys(result.tracks || {}).filter(key => TRACK_KEYS.includes(key)).length;
+        if (verifiedCount < entries.length) throw new Error('Upload verification was incomplete. Please retry.');
+        remoteTracks = result.tracks || {};
+        activeGiftId = setupGiftId;
+        const shareUrl = new URL(window.location.href);
+        shareUrl.search = '';
+        shareUrl.hash = '';
+        shareUrl.searchParams.set('gift', setupGiftId);
+        shareLinkInput.value = shareUrl.toString();
+        shareResult.hidden = false;
+        setSetupStatus(`Done! ${verifiedCount} music track(s) saved and verified. Open an envelope below to preview, then share the link. ✅`);
+        showToast('Music uploaded and verified! Link ready. 🧸');
+      } catch (error) {
+        console.error('Music upload error:', error);
+        setSetupStatus(`${error.message || 'Music upload failed.'} Check the Netlify function deployment, then try again.`, true);
+      } finally {
+        saveMusicButton.disabled = false;
+      }
+    });
+
+    setupPreviewHint.addEventListener('click', () => {
+      const chosen = TRACK_KEYS.find(key => selectedMusic[key]);
+      if (!chosen) {
+        showToast('Select a music file, then open its matching envelope to preview it.');
+        return;
+      }
+      const card = document.querySelector(`[data-note="${chosen}"]`);
+      if (card) card.click();
+      else showToast('Select a music file, then open its matching envelope below.');
+    });
+
+    copyShareLinkButton.addEventListener('click', async () => {
+      const value = shareLinkInput.value;
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast('Share link copied! 🧸');
+      } catch {
+        shareLinkInput.focus();
+        shareLinkInput.select();
+        const copied = document.execCommand('copy');
+        showToast(copied ? 'Share link copied! 🧸' : 'Link selected — press Ctrl+C to copy.');
+      }
+    });
+
+    function openedNotes() {
+      try { return JSON.parse(localStorage.getItem('teddybear-opened-notes') || '[]'); }
+      catch { return []; }
+    }
+    function markOpened(key) {
+      const opened = new Set(openedNotes());
+      opened.add(key);
+      try { localStorage.setItem('teddybear-opened-notes', JSON.stringify([...opened])); }
+      catch { /* storage may be disabled; the page still works */ }
+      document.querySelector(`[data-note="${key}"]`)?.classList.add('is-opened');
+    }
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
+    }
+    function openNote(key, trigger) {
+      const note = NOTES[key];
+      if (!note) return;
+      currentKey = key;
+      lastTrigger = trigger || lastTrigger;
+      titleEl.textContent = note.title;
+      messageEl.textContent = note.message;
+      iconEl.textContent = note.icon;
+      stampEl.textContent = note.stamp;
+      coverEl.style.background = note.color;
+      playEnvelopeMusic(key);
+      backdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      markOpened(key);
+      setTimeout(() => closeBtn.focus(), 40);
+    }
+    function closeNote() {
+      backdrop.classList.remove('show');
+      stopEnvelopeMusic();
+      document.body.style.overflow = '';
+      if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+    }
+    grid.addEventListener('click', (event) => {
+      const card = event.target.closest('[data-note]');
+      if (card) openNote(card.dataset.note, card);
+    });
+    closeBtn.addEventListener('click', closeNote);
+    closeSecondary.addEventListener('click', closeNote);
+    backdrop.addEventListener('click', (event) => { if (event.target === backdrop) closeNote(); });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && backdrop.classList.contains('show')) closeNote();
+    });
+    nextBtn.addEventListener('click', () => {
+      const keys = Object.keys(NOTES).filter(key => key !== currentKey);
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      openNote(key, nextBtn);
+    });
+    surpriseBtn.addEventListener('click', () => {
+      const keys = Object.keys(NOTES);
+      const opened = new Set(openedNotes());
+      const unopened = keys.filter(key => !opened.has(key));
+      const pool = unopened.length ? unopened : keys;
+      const key = pool[Math.floor(Math.random() * pool.length)];
+      openNote(key, surpriseBtn);
+    });
+    openedNotes().forEach(key => {
+      document.querySelector(`[data-note="${key}"]`)?.classList.add('is-opened');
+    });
+    loadGiftTracks();
+  </script>
+</body>
+</html>
