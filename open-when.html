@@ -574,14 +574,46 @@
           await uploadTrack(setupGiftId, key, file);
         }
         setSetupStatus('Verifying uploaded tracks…');
-        const verify = await fetch(`${MUSIC_API}?${new URLSearchParams({ id: setupGiftId })}`, {
-          headers: { Accept: 'application/json' }, cache: 'no-store'
-        });
-        const result = await verify.json().catch(() => ({}));
-        if (!verify.ok) throw new Error(result.error || `Verification failed (${verify.status}).`);
-        const verifiedCount = Object.keys(result.tracks || {}).filter(key => TRACK_KEYS.includes(key)).length;
-        if (verifiedCount < entries.length) throw new Error('Upload verification was incomplete. Please retry.');
-        remoteTracks = result.tracks || {};
+
+const verify = await fetch(
+  `${MUSIC_API}?${new URLSearchParams({ id: setupGiftId })}`,
+  {
+    headers: { Accept: 'application/json' },
+    cache: 'no-store'
+  }
+);
+
+const result = await verify.json().catch(() => ({}));
+
+if (!verify.ok) {
+  throw new Error(
+    result.error || `Verification failed (${verify.status}).`
+  );
+}
+
+const verifiedTracks = result.tracks || {};
+const verifiedKeys = Object.keys(verifiedTracks)
+  .filter(key => TRACK_KEYS.includes(key));
+
+const missingKeys = entries
+  .map(([key]) => key)
+  .filter(key => !verifiedKeys.includes(key));
+
+if (missingKeys.length > 0) {
+  console.error('Music verification details:', {
+    giftId: setupGiftId,
+    expectedTracks: entries.map(([key]) => key),
+    verifiedTracks: verifiedKeys,
+    missingTracks: missingKeys,
+    response: result
+  });
+
+  throw new Error(
+    `Verification incomplete. Found ${verifiedKeys.length}/${entries.length} tracks. Missing: ${missingKeys.join(', ')}.`
+  );
+}
+
+remoteTracks = verifiedTracks;
         activeGiftId = setupGiftId;
         const shareUrl = new URL(window.location.href);
         shareUrl.search = '';
